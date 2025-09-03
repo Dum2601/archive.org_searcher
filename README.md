@@ -5,13 +5,14 @@ Searches for links on a specific webpage and displays them in a modal.
 ---
 
 ##  Description
-A simple tool built with Flask, Python, and BeautifulSoup4. It scrapes links from any provided URL and displays the results in a modal window on the front-end.
+A simple tool built with Flask, Python, and BeautifulSoup4, requests. It scrapes links from any provided URL and displays the results in a modal window on the front-end.
 
 ---
 
 ##  Technologies Used
 - **Python** — backend logic  
-- **Flask** — lightweight web server  
+- **Flask** — lightweight web server
+- **requests** - simple restAPI lib
 - **BeautifulSoup4** — parsing and link extraction  
 - **HTML / CSS / JavaScript** — interface, modal, and asynchronous requests (AJAX/fetch)
 
@@ -48,22 +49,30 @@ Access: `http://localhost:5000/`
 
 ##  Project Structure
 ```
-archive.org_searcher/
-├── app.py             # Main Flask application
-├── templates/
-│   └── index.html     # HTML template with input field and modal
-├── static/
-│   ├── styles.css     # CSS styles
-│   └── script.js      # Modal logic and AJAX request
-├── requirements.txt   # Project dependencies
-└── README.md          # Documentation (this file)
+src/
+├── pages/                     # Front-end files (HTML + CSS)
+│   ├── style/                  # Styles and layout
+│   │   ├── modal.css           # CSS specific to the modal window
+│   │   └── style.css           # Global styles for the page
+│   └── index.html              # Main HTML page with search form and modal
+│
+├── utils/                      # Utility code and backend logic
+│   ├── URL_operations/         # Module for URL processing
+│   │   └── get_page.py         # Functions to fetch and parse links from a webpage
+│   ├── routes.py               # Flask routes (handles requests and responses)
+│   └── __pycache__/            # Auto-generated cache from Python (can be ignored)
+│
+├── main.py                     # Entry point of the Flask app (runs the server)
+├── LICENSE                     # License file for open source use
+└── README.md                   # Documentation of the project
+
 ```
 
 ---
 
 ##  Example of Use
 - Open the main page.  
-- Enter, for example, `https://example.com`.  
+- Enter link 
 - Click **Search links**.  
 - The modal will show all the links found on the page.
 
