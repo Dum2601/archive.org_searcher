@@ -1,0 +1,123 @@
+<!-- # link searcher
+# Copyright (C) 2025 Douglas Barbosa
+#
+# Este programa é software livre: você pode redistribuí-lo e/ou modificá-lo
+# sob os termos da Licença Pública Geral GNU publicada pela Free Software Foundation,
+# na versão 3 da Licença, ou (a seu critério) qualquer versão posterior.
+#
+# Este programa é distribuído na esperança de que seja útil,
+# mas SEM QUALQUER GARANTIA; sem mesmo a garantia implícita de
+# COMERCIABILIDADE ou ADEQUAÇÃO A UM DETERMINADO PROPÓSITO.
+# Consulte a Licença Pública Geral GNU para mais detalhes.
+#
+# Você deve ter recebido uma cópia da Licença Pública Geral GNU
+# junto com este programa. Se não, veja <https://www.gnu.org/licenses/>.
+#
+# ----------------------------------------------------------------------------
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LINK FILTER</title>
+  <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="style\modal.css">
+
+</head>
+<body>
+
+  <nav class="nav_bar">
+    <h1>==Link Filter==</h1>
+    <button id="infoBtn">Info</button>
+  </nav>
+
+  <main class="main_body">
+    <div class="search_link">
+      <h2>Paste Link Below</h2>
+      <input type="text" id="linkInput" placeholder="https://example.com">
+      <button id="sendBtn">Send</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Douglas Barbosa — Licensed under GNU GPL v3</p>
+  </footer>
+
+
+  <div id="linksModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <h3>Extracted Links</h3>
+      <ul id="linksList" class="link-list"></ul>
+    </div>
+  </div>
+
+  <script>
+    const sendBtn = document.getElementById("sendBtn");
+    const modal = document.getElementById("linksModal");
+    const closeModal = document.getElementById("closeModal");
+    const linksList = document.getElementById("linksList");
+
+    sendBtn.addEventListener("click", async () => {
+      const link = document.getElementById("linkInput").value.trim();
+      if (!link) {
+        alert("Insert a link first");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://127.0.0.1:5000/get_link_page", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ link })
+        });
+
+        const data = await response.json();
+        if (response.ok && data.links) {
+          // clear previous
+          linksList.innerHTML = "";
+          data.links.forEach(l => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = l;
+            a.target = "_blank";
+            a.textContent = l;
+            li.appendChild(a);
+            linksList.appendChild(li);
+          });
+          modal.style.display = "flex"; // open modal
+        } else {
+          alert(data.error || "No links found");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Connection failed");
+      }
+    });
+
+    closeModal.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    window.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
