@@ -72,7 +72,7 @@ src/
 
 ##  Example of Use
 - Open the main page.  
-- Enter link 
+- Enter link, example: "https://archive.org/details/kotov-soviet-chess-school-1961"
 - Click **Search links**.  
 - The modal will show all the links found on the page.
 
