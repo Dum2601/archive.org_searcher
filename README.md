@@ -1,6 +1,8 @@
 # archive.org_searcher
 
-Searches for links on a specific webpage and displays them in a modal.
+This project is a full-stack, free-software application designed for educational purposes. Its primary function is to search for all links on a specific webpage (https://archive.org) and display them in a user-friendly modal interface. By leveraging Python with Flask for the backend and BeautifulSoup4 for web scraping, it allows users to extract links efficiently from any item hosted on archive.org. The frontend is built with standard web technologies, providing a clean, interactive experience where users can quickly view and copy the extracted links without leaving the page.
+
+Beyond its practical functionality, this project serves as an excellent learning tool for students and developers exploring web scraping, full-stack development, and modal-based UI interactions. Users can study the code to understand how Flask handles requests, how BeautifulSoup parses HTML, and how frontend JavaScript dynamically updates the interface. Because it is fully open-source, it encourages experimentation and modification, allowing learners to extend its capabilities—for example, adding filters for certain types of links, integrating download options, or improving the modal design.
 
 ---
 
